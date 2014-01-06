@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="2848575071">
+    <data-source source="LOCAL" name="Android SQLite" uuid="802a0a69-43b1-42ed-a3c6-7affc69ba07d">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$USER_HOME$/Library/Caches/IntelliJIdea13/android/databases/SERIAL_NUMBER_HT2AALY00769/pl.several27.Biblia_Warszawska/internal/Bible</jdbc-url>
+      <libraries />
+    </data-source>
+  </component>
+</project>
+

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+		<ListPreference
+				android:key="settings_fonts"
+				android:entries="@array/fonts"
+				android:summary="@string/settings_fonts_summary"
+				android:entryValues="@array/fonts_values"
+				android:title="@string/settings_font" />
+</PreferenceScreen>
