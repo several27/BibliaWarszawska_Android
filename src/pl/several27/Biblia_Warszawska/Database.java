@@ -1,6 +1,7 @@
 package pl.several27.Biblia_Warszawska;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -27,15 +28,6 @@ public class Database extends SQLiteOpenHelper
 	@Override
 	public void onCreate(SQLiteDatabase database)
 	{
-		String CREATE_BIBLE_TABLE = "CREATE TABLE bible (" +
-				"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				"book INTEGER, " +
-				"chapter INTEGER NOT NULL, " +
-				"verse INTEGER NOT NULL, " +
-				"content TEXT" +
-				")";
-		database.execSQL(CREATE_BIBLE_TABLE);
-
 		try
 		{
 			InputStream inputStream = this.context.getAssets().open("bible.sql");
