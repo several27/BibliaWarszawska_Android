@@ -2,6 +2,8 @@
 <resources>
 	<string name="app_name">Biblia Warszawska</string>
 	<string name="action_settings">Ustawienia</string>
+	<string name="action_back">Poprzedni rozdział</string>
+	<string name="action_forward">Następny rozdział</string>
 	<string name="settings_content">Czytanie</string>
 	<string name="settings_fonts_summary">Ustaw rozmiar czcionki</string>
 	<string name="settings_font">Czcionka</string>
