@@ -14,6 +14,6 @@ public class SettingsActivity extends PreferenceActivity
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
 
-
+		getActionBar().setTitle(R.string.action_settings);
 	}
 }
