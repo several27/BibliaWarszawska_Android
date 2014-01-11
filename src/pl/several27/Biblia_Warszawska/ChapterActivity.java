@@ -73,7 +73,7 @@ public class ChapterActivity extends Activity
 				@Override
 				public void run()
 				{
-					progressDialog = ProgressDialog.show(ChapterActivity.this, "Wczytywanie...", "Operacja ta jest jednorazowa, proszę czekać kilka sekund i nie zamykać aplikacji.");
+					progressDialog = ProgressDialog.show(ChapterActivity.this, getResources().getString(R.string.sql_execute_dialog_title), getResources().getString(R.string.sql_execute_dialog_message));
 				}
 			});
 		}

@@ -10,4 +10,6 @@
 	<string name="small">Mała</string>
 	<string name="medium">Średnia</string>
 	<string name="big">Duża</string>
+	<string name="sql_execute_dialog_title">Wczytywanie...</string>
+	<string name="sql_execute_dialog_message">Operacja ta jest jednorazowa, proszę czekać kilka sekund i nie zamykać aplikacji.</string>
 </resources>
