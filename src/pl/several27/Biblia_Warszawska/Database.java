@@ -110,6 +110,60 @@ public class Database extends SQLiteOpenHelper
 		return chapters;
 	}
 
+	public ArrayList<Verse> search(String query)
+	{
+		SQLiteDatabase database = this.getReadableDatabase();
+
+		Cursor cursor = database.rawQuery("SELECT id, book, chapter, verse, content FROM bible WHERE content LIKE ?", new String[] {"%" + query + "%"});
+
+		ArrayList<Verse> results = new ArrayList<Verse>();
+		if(cursor.moveToFirst())
+		{
+			do
+			{
+				results.add(new Verse(cursor.getInt(1), cursor.getInt(2), cursor.getInt(3), cursor.getString(4)));
+			} while(cursor.moveToNext());
+		}
+
+		return results;
+	}
+
+	public class Verse
+	{
+		public int book;
+		public int chapter;
+		public int verse;
+		public String content;
+
+		public Verse(int book, int chapter, int verse, String content)
+		{
+			this.book = book;
+			this.chapter = chapter;
+			this.verse = verse;
+			this.content = content;
+		}
+
+		public int getBook()
+		{
+			return book;
+		}
+
+		public int getChapter()
+		{
+			return chapter;
+		}
+
+		public int getVerse()
+		{
+			return verse;
+		}
+
+		public String getContent()
+		{
+			return content;
+		}
+	}
+
 	private void execSqlFile(SQLiteDatabase database, InputStream inputStream)
 			throws IOException
 	{

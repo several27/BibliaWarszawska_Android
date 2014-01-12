@@ -2,6 +2,8 @@
 <resources>
 	<string name="app_name">Biblia Warszawska</string>
 	<string name="action_settings">Ustawienia</string>
+	<string name="action_search">Wyszukuj</string>
+	<string name="action_search_hint">Wpisz część wersetu z bibli.</string>
 	<string name="action_back">Poprzedni rozdział</string>
 	<string name="action_forward">Następny rozdział</string>
 	<string name="settings_content">Czytanie</string>
@@ -12,4 +14,5 @@
 	<string name="big">Duża</string>
 	<string name="sql_execute_dialog_title">Wczytywanie...</string>
 	<string name="sql_execute_dialog_message">Operacja ta jest jednorazowa, proszę czekać kilka sekund i nie zamykać aplikacji.</string>
+	<string name="search_results">Wyniki wyszukiwania</string>
 </resources>
