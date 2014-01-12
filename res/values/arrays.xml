@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string-array name="fonts">
-		<item name="1">@string/small</item>
-		<item name="2">@string/medium</item>
-		<item name="3">@string/big</item>
+	<string-array name="font_sizes">
+		<item>@string/small</item>
+		<item>@string/medium</item>
+		<item>@string/big</item>
 	</string-array>
-	<string-array name="fonts_values">
-		<item name="1">10</item>
-		<item name="2">15</item>
-		<item name="3">20</item>
+	<string-array name="font_sizes_values">
+		<item>10</item>
+		<item>15</item>
+		<item>20</item>
 	</string-array>
 </resources>
