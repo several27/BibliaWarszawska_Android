@@ -34,7 +34,7 @@ public class ContentActivity extends Activity
 		TextView textView = (TextView) findViewById(R.id.textView);
 
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-		textView.setTextSize(Float.parseFloat(sharedPreferences.getString("settings_font_sizes", "15")));
+		textView.setTextSize(Float.parseFloat(sharedPreferences.getString("settings_font_size", "15")));
 		textView.setText(text);
 	}
 

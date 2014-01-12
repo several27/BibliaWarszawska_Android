@@ -6,10 +6,12 @@
 	<string name="action_search_hint">Wpisz część wersetu z bibli.</string>
 	<string name="action_back">Poprzedni rozdział</string>
 	<string name="action_forward">Następny rozdział</string>
+
 	<string name="settings_content">Czytanie</string>
-	<string name="settings_font_sizes_summary">Ustaw rozmiar czcionki</string>
-	<string name="settings_font_sizes">Rozmiar</string>
+	<string name="settings_font_size_summary">Ustaw rozmiar czcionki</string>
+	<string name="settings_font_size">Rozmiar</string>
 	<string name="settings_font">Czcionka</string>
+
 	<string name="small">Mała</string>
 	<string name="medium">Średnia</string>
 	<string name="big">Duża</string>

@@ -5,11 +5,11 @@
 		android:title="@string/settings_font"
 	    android:key="settings_font">
 		<ListPreference
-				android:key="settings_font_sizes"
-				android:entries="@array/font_sizes"
-				android:summary="@string/settings_font_sizes_summary"
-				android:entryValues="@array/font_sizes_values"
-				android:title="@string/settings_font_sizes"
+				android:key="settings_font_size"
+				android:entries="@array/font_size"
+				android:summary="@string/settings_font_size_summary"
+				android:entryValues="@array/font_size_values"
+				android:title="@string/settings_font_size"
 		        android:defaultValue="15" />
 	</PreferenceCategory>
 </PreferenceScreen>
