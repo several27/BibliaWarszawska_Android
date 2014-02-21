@@ -18,4 +18,7 @@
 	<string name="sql_execute_dialog_title">Wczytywanie...</string>
 	<string name="sql_execute_dialog_message">Operacja ta jest jednorazowa, proszę czekać kilka sekund i nie zamykać aplikacji.</string>
 	<string name="search_results">Wyniki wyszukiwania</string>
+
+    <string name="history">Historia</string>
+	<string name="action_history">Historia</string>
 </resources>

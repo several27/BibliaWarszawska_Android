@@ -1,5 +1,6 @@
 package pl.several27.Biblia_Warszawska;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,7 +12,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Database extends SQLiteOpenHelper
 {
@@ -128,7 +131,7 @@ public class Database extends SQLiteOpenHelper
 		return results;
 	}
 
-	public class Verse
+	public static class Verse
 	{
 		public int book;
 		public int chapter;
@@ -162,6 +165,160 @@ public class Database extends SQLiteOpenHelper
 		{
 			return content;
 		}
+	}
+
+    public static class HistoryItem
+    {
+        public int id;
+        public boolean search;
+        public String searchString;
+        public Verse verse;
+	    public String date;
+
+        public HistoryItem(String searchString, int id, String date)
+        {
+            this.searchString = searchString;
+            this.search = true;
+            this.id = id;
+	        this.date = date;
+        }
+
+        public HistoryItem(Verse verse, int id, String date)
+        {
+            this.verse = verse;
+            this.search = false;
+            this.id = id;
+	        this.date = date;
+        }
+
+        public int getBook()
+        {
+            return verse.getBook();
+        }
+
+        public int getChapter()
+        {
+            return verse.getChapter();
+        }
+
+        public int getVerse()
+        {
+            return verse.getVerse();
+        }
+
+	    public String getDate()
+	    {
+		    return this.date;
+	    }
+
+        public boolean isSearch()
+        {
+            return search;
+        }
+
+	    public String getSearchString()
+	    {
+		    return this.searchString;
+	    }
+    }
+
+	public HistoryItem getLastHistoryString()
+	{
+		SQLiteDatabase database = this.getReadableDatabase();
+
+		Cursor cursor = database.rawQuery("SELECT id, search, string, book, chapter, verse, date FROM history WHERE ID = (SELECT MAX(id) FROM history) AND search = 1", new String[]{});
+
+		HistoryItem historyItem = new HistoryItem("", 0, "");
+		if(cursor.moveToFirst())
+		{
+			do
+			{
+				historyItem = new HistoryItem(cursor.getString(2), cursor.getInt(0), cursor.getString(6));
+			} while(cursor.moveToNext());
+		}
+
+		return historyItem;
+	}
+
+	public HistoryItem getLastHistoryVerse()
+	{
+		SQLiteDatabase database = this.getReadableDatabase();
+
+		Cursor cursor = database.rawQuery("SELECT id, search, string, book, chapter, verse, date FROM history WHERE ID = (SELECT MAX(id) FROM history) AND search = 0", new String[]{});
+
+		HistoryItem historyItem = new HistoryItem(new Verse(0, 0, 0, ""), 0, "");
+		if(cursor.moveToFirst())
+		{
+			do
+			{
+				historyItem = new HistoryItem(new Verse(cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), ""), cursor.getInt(0), cursor.getString(6));
+			} while(cursor.moveToNext());
+		}
+
+		return historyItem;
+	}
+
+	public HistoryItem addHistoryItem(String searchString)
+	{
+		if(!getLastHistoryString().getSearchString().equals(searchString))
+		{
+			SQLiteDatabase database = this.getReadableDatabase();
+			ContentValues contentValues = new ContentValues();
+			contentValues.put("search", 1);
+			contentValues.put("string", searchString);
+			contentValues.put("date", (new SimpleDateFormat("yyyy.MM.dd HH:mm:ss")).format(new Date()));
+			int id = (int) Math.round(database.insert("history", null, contentValues));
+
+			return new HistoryItem(searchString, id, (new SimpleDateFormat("yyyy.MM.dd HH:mm:ss")).format(new Date()));
+		}
+		else
+		{
+			return new HistoryItem(searchString, 0, "");
+		}
+	}
+
+	public HistoryItem addHistoryItem(Verse verse)
+	{
+		HistoryItem historyItem = getLastHistoryVerse();
+		if(historyItem.verse.getChapter() != verse.getChapter() || historyItem.verse.getBook() != verse.getBook())
+		{
+			SQLiteDatabase database = this.getReadableDatabase();
+			ContentValues contentValues = new ContentValues();
+			contentValues.put("search", 0);
+			contentValues.put("book", verse.getBook());
+			contentValues.put("chapter", verse.getChapter());
+			contentValues.put("verse", verse.getVerse());
+			contentValues.put("date", (new SimpleDateFormat("yyyy.MM.dd HH:mm:ss")).format(new Date()));
+			int id = (int) Math.round(database.insert("history", null, contentValues));
+
+			return new HistoryItem(new Verse(verse.getBook(), verse.getChapter(), verse.getVerse(), ""), id, (new SimpleDateFormat("yyyy.MM.dd HH:mm:ss")).format(new Date()));
+		}
+		else
+		{
+			return new HistoryItem(verse, 0, "");
+		}
+	}
+
+	public ArrayList<HistoryItem> getHistory()
+	{
+		SQLiteDatabase database = this.getReadableDatabase();
+
+		Cursor cursor = database.rawQuery("SELECT id, search, string, book, chapter, verse, date FROM history ORDER BY id DESC", new String[]{});
+
+		ArrayList<HistoryItem> history = new ArrayList<HistoryItem>();
+		if(cursor.moveToFirst())
+		{
+			do
+			{
+				if(cursor.getInt(1) == 1)
+					history.add(new HistoryItem(cursor.getString(2), cursor.getInt(0), cursor.getString(6)));
+				else
+					history.add(new HistoryItem(new Verse(cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), ""), cursor.getInt(0), cursor.getString(6)));
+
+			} while(cursor.moveToNext());
+		}
+
+		return history;
 	}
 
 	private void execSqlFile(SQLiteDatabase database, InputStream inputStream)

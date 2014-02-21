@@ -16,11 +16,12 @@
 			           android:value=".SearchResultsActivity"/>
 		</activity>
 		<activity android:name=".ChapterActivity"
-		          android:launchMode="singleTop">
+		          android:launchMode="singleTop"
+		          android:parentActivityName=".MainActivity">
 			<meta-data android:name="android.app.default_searchable"
 		               android:value=".SearchResultsActivity"/>
 		</activity>
-		<activity android:name=".ContentActivity"/>
+		<activity android:name=".ContentActivity" android:parentActivityName=".ChapterActivity"/>
 		<activity android:name=".SettingsActivity"/>
 		<activity android:name=".SearchResultsActivity" android:parentActivityName=".MainActivity">
 			<intent-filter>
@@ -29,5 +30,6 @@
 			<meta-data android:name="android.app.searchable"
 			           android:resource="@xml/searchable" />
 		</activity>
-	</application>
+        <activity android:name=".HistoryActivity" android:parentActivityName=".MainActivity" />
+    </application>
 </manifest>

@@ -1,5 +1,6 @@
 package pl.several27.Biblia_Warszawska;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
@@ -32,11 +33,22 @@ public class ChapterActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		getActionBar().setTitle(MainActivity.database.booksList[MainActivity.book - 1]);
+		ActionBar actionBar = getActionBar();
+		actionBar.setTitle(MainActivity.database.booksList[MainActivity.book - 1]);
+		actionBar.setDisplayHomeAsUpEnabled(true);
+
 
 		listView = (ListView) findViewById(R.id.listView);
 
-		new FirstLoadAsyncTask().execute();
+		if(!MainActivity.asyncTask)
+		{
+			new FirstLoadAsyncTask().execute();
+			MainActivity.asyncTask = true;
+		}
+		else
+		{
+			setChapters(MainActivity.database.countChapters(MainActivity.book));
+		}
 
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
 		{
@@ -115,8 +127,10 @@ public class ChapterActivity extends Activity
 		switch(item.getItemId())
 		{
 			case R.id.action_settings:
-				Intent intent = new Intent(ChapterActivity.this, SettingsActivity.class);
-				startActivity(intent);
+				startActivity(new Intent(ChapterActivity.this, SettingsActivity.class));
+				return true;
+			case R.id.action_history:
+				startActivity(new Intent(ChapterActivity.this, HistoryActivity.class));
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);

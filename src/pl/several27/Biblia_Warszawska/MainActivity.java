@@ -1,9 +1,11 @@
 package pl.several27.Biblia_Warszawska;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -19,10 +21,13 @@ import java.util.ArrayList;
 
 public class MainActivity extends Activity
 {
+    public static final String PREFS_NAME = "BIBLIA_WARSZAWSKA_PREFS_FILE";
 	public static Database database;
 
 	public static int book;
 	public static int chapter;
+
+	public static boolean asyncTask = false;
 
 	/**
 	 * Called when the activity is first created.
@@ -79,11 +84,50 @@ public class MainActivity extends Activity
 		switch(item.getItemId())
 		{
 			case R.id.action_settings:
-				Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-				startActivity(intent);
+				startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+				return true;
+			case R.id.action_history:
+				if(!MainActivity.asyncTask)
+				{
+					new FirstLoadAsyncTask().execute();
+					MainActivity.asyncTask = true;
+				}
+				startActivity(new Intent(MainActivity.this, HistoryActivity.class));
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
+		}
+	}
+
+
+	public class FirstLoadAsyncTask extends AsyncTask<Integer, Void, Integer>
+	{
+		private ProgressDialog progressDialog;
+
+		@Override
+		protected void onPreExecute()
+		{
+			runOnUiThread(new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					progressDialog = ProgressDialog.show(MainActivity.this, getResources().getString(R.string.sql_execute_dialog_title), getResources().getString(R.string.sql_execute_dialog_message));
+				}
+			});
+		}
+
+		@Override
+		protected Integer doInBackground(Integer... params)
+		{
+			int chapters = MainActivity.database.countChapters(MainActivity.book);
+			return chapters;
+		}
+
+		@Override
+		protected void onPostExecute(Integer result)
+		{
+			progressDialog.dismiss();
 		}
 	}
 }
